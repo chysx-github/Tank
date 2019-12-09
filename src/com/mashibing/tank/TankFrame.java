@@ -9,7 +9,8 @@ import java.awt.Graphics;
 
 public class TankFrame extends Frame {
     int x = 200, y = 200;
-    Dir dir =  Dir.DOWN;
+    Dir dir =  Dir.DOWN; //初始方向
+    final int SPEED = 10; //坦克移速
     //构造方法
     public TankFrame(){
         // 下面不写this也可以
@@ -33,36 +34,80 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g){
+        //根据方向画图
+
         g.fillRect(x,y,50,50);
+
+        switch (dir){
+            case UP:
+                y -= SPEED;
+                break;
+            case DOWN:
+                y += SPEED;
+                break;
+            case LEFT:
+                x -= SPEED;
+                break;
+            case RIGHT:
+                x += SPEED;
+                break;
+        }
     }
 
-    //内部类
+    //内部类,键盘监听类
     class MyKeyListener extends KeyAdapter{
+
+        boolean bU = false;
+        boolean bD = false;
+        boolean bL = false;
+        boolean bR = false;
 
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
-            //System.out.println("keyPressed");
             switch (key){
                 case KeyEvent.VK_UP:
-                    y -= 10;
+                    bU = true;
                     break;
                 case KeyEvent.VK_DOWN:
-                    y += 10;
+                    bD = true;
                     break;
                 case KeyEvent.VK_LEFT:
-                    x -= 10;
+                    bL = true;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    x += 10;
+                    bR = true;
                     break;
             }
-            repaint();  //不能调用paint，画笔不在你手里，在系统手里
+
+            setMainTankDir();
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            //System.out.println("keyReleased");
+            int key = e.getKeyCode();
+            switch (key){
+                case KeyEvent.VK_UP:
+                    bU = false;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    bD = false;
+                    break;
+                case KeyEvent.VK_LEFT:
+                    bL = false;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    bR = false;
+                    break;
+            }
+            setMainTankDir();
+        }
+
+        public void setMainTankDir(){
+            if(bU) dir = Dir.UP;
+            if(bD) dir = Dir.DOWN;
+            if(bL) dir = Dir.LEFT;
+            if(bR) dir = Dir.RIGHT;
         }
     }
 }
