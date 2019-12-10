@@ -8,9 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.Graphics;
 
 public class TankFrame extends Frame {
-    int x = 200, y = 200;
-    Dir dir =  Dir.DOWN; //初始方向
-    final int SPEED = 10; //坦克移速
+    Tank myTank = new Tank(200,200,Dir.DOWN);
     //构造方法
     public TankFrame(){
         // 下面不写this也可以
@@ -31,27 +29,9 @@ public class TankFrame extends Frame {
 
     }
 
-
     @Override
-    public void paint(Graphics g){
-        //根据方向画图
-
-        g.fillRect(x,y,50,50);
-
-        switch (dir){
-            case UP:
-                y -= SPEED;
-                break;
-            case DOWN:
-                y += SPEED;
-                break;
-            case LEFT:
-                x -= SPEED;
-                break;
-            case RIGHT:
-                x += SPEED;
-                break;
-        }
+    public void paint(Graphics g) {
+        myTank.paint(g);
     }
 
     //内部类,键盘监听类
@@ -104,10 +84,10 @@ public class TankFrame extends Frame {
         }
 
         public void setMainTankDir(){
-            if(bU) dir = Dir.UP;
-            if(bD) dir = Dir.DOWN;
-            if(bL) dir = Dir.LEFT;
-            if(bR) dir = Dir.RIGHT;
+            if(bU) myTank.setDir(Dir.UP);
+            if(bD) myTank.setDir(Dir.DOWN);
+            if(bL) myTank.setDir(Dir.LEFT);
+            if(bR) myTank.setDir(Dir.RIGHT);
         }
     }
 }
