@@ -1,11 +1,12 @@
 package com.mashibing.tank;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Tank {
     private int x = 200, y = 200;
     private Dir dir =  Dir.DOWN; //初始方向
-    private static final int SPEED = 10; //坦克移速
+    private static final int SPEED = 5; //坦克移速
     private boolean moving = false; //坦克是否处于运动状态
 
     public boolean isMoving() {
@@ -34,7 +35,10 @@ public class Tank {
 
     public void paint(Graphics g){
 
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
         g.fillRect(x,y,50,50);
+        g.setColor(c);
 
         move();
 

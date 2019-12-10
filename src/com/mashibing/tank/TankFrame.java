@@ -1,6 +1,8 @@
 package com.mashibing.tank;
 
+import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -9,10 +11,13 @@ import java.awt.Graphics;
 
 public class TankFrame extends Frame {
     Tank myTank = new Tank(200,200,Dir.DOWN);
+    Bullet b = new Bullet(300,300,Dir.DOWN);
+
+    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
     //构造方法
     public TankFrame(){
         // 下面不写this也可以
-        this.setSize(800,600);
+        this.setSize(GAME_WIDTH,GAME_HEIGHT);
         this.setResizable(false);//不可改变窗口大小
         this.setTitle("tank war");
         this.setVisible(true);
@@ -29,14 +34,32 @@ public class TankFrame extends Frame {
 
     }
 
+    //双缓冲解决闪烁
+    Image offScreenImage = null;
+    @Override
+    public void update(Graphics g) {
+        if(offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
     @Override
     public void paint(Graphics g) {
+
         myTank.paint(g);
+        b.paint(g);
     }
 
     //内部类,键盘监听类
     class MyKeyListener extends KeyAdapter{
-
+        //记录方向键的状态
         boolean bU = false;
         boolean bD = false;
         boolean bL = false;
