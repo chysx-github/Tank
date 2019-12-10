@@ -6,6 +6,15 @@ public class Tank {
     private int x = 200, y = 200;
     private Dir dir =  Dir.DOWN; //初始方向
     private static final int SPEED = 10; //坦克移速
+    private boolean moving = false; //坦克是否处于运动状态
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
 
     public Dir getDir() {
         return dir;
@@ -24,9 +33,15 @@ public class Tank {
 
 
     public void paint(Graphics g){
-        //根据方向画图
 
         g.fillRect(x,y,50,50);
+
+        move();
+
+    }
+    public void move(){
+
+        if(!moving) return;
 
         switch (dir){
             case UP:
@@ -42,5 +57,7 @@ public class Tank {
                 x += SPEED;
                 break;
         }
+
     }
+
 }
