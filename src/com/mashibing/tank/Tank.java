@@ -9,6 +9,8 @@ public class Tank {
     private static final int SPEED = 5; //坦克移速
     private boolean moving = false; //坦克是否处于运动状态
 
+    private TankFrame tf = null;
+
     public boolean isMoving() {
         return moving;
     }
@@ -25,11 +27,12 @@ public class Tank {
         this.dir = dir;
     }
 
-    public Tank(int x, int y, Dir dir){
+    public Tank(int x, int y, Dir dir, TankFrame tf){
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
 
 
@@ -61,7 +64,9 @@ public class Tank {
                 x += SPEED;
                 break;
         }
-
     }
 
+    public void fire() {
+        tf.b = new Bullet(this.x, this.y,this.dir);
+    }
 }
