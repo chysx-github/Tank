@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class ResourceMgr {
+public class ResourceMgr { //资源管理者
     public static BufferedImage tankL, tankR, tankU, tankD;
     public static BufferedImage bulletL, bulletU, bulletR, bulletD;
 
