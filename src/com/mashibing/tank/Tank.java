@@ -4,9 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Tank {
-    private int x = 200, y = 200;
+    private int x, y;
     private Dir dir =  Dir.DOWN; //初始方向
     private static final int SPEED = 5; //坦克移速
+
+    public static int WIDTH = ResourceMgr.tankD.getWidth();  //坦克长宽
+    public static int HEIGHT = ResourceMgr.tankD.getHeight();
+
     private boolean moving = false; //坦克是否处于运动状态
 
     private TankFrame tf = null;
@@ -38,10 +42,20 @@ public class Tank {
 
     public void paint(Graphics g){
 
-        Color c = g.getColor();
-        g.setColor(Color.YELLOW);
-        g.fillRect(x,y,50,50);
-        g.setColor(c);
+        switch (dir) {
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR, x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD, x, y, null);
+                break;
+        }
 
         move();
 
@@ -67,6 +81,9 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bullets.add(new Bullet(this.x, this.y,this.dir, this.tf));
+
+        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2; //计算子弹生成的位置
+        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;//还是偏了一些，上下不明显，左右明显
+        tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
     }
 }
