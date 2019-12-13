@@ -1,6 +1,5 @@
 package com.mashibing.tank;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Tank {
@@ -12,23 +11,36 @@ public class Tank {
     public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
     private boolean moving = false; //坦克是否处于运动状态
-
     private boolean living = true;
-
+    private Group group = Group.BAD;
     private TankFrame tf = null;
+
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf){
+        super();
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.group = group;
+        this.tf = tf;
+    } //构造方法
 
     public int getX() {
         return x;
     }
-
     public int getY() {
         return y;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public boolean isMoving() {
         return moving;
     }
-
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
@@ -36,19 +48,9 @@ public class Tank {
     public Dir getDir() {
         return dir;
     }
-
     public void setDir(Dir dir) {
         this.dir = dir;
     }
-
-    public Tank(int x, int y, Dir dir, TankFrame tf){
-        super();
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-        this.tf = tf;
-    }
-
 
     public void paint(Graphics g){
         if(!living){
@@ -73,6 +75,7 @@ public class Tank {
         move();
 
     }
+
     public void move(){
 
         if(!moving) return;
@@ -97,7 +100,7 @@ public class Tank {
 
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2; //计算子弹生成的位置
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;//还是偏了一些，上下不明显，左右明显
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
+        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
     }
 
     public void die() {
