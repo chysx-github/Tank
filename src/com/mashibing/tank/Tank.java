@@ -1,6 +1,7 @@
 package com.mashibing.tank;
 
 import java.awt.Graphics;
+import java.util.Random;
 
 public class Tank {
     private int x, y;
@@ -10,10 +11,12 @@ public class Tank {
     public static int WIDTH = ResourceMgr.tankD.getWidth();  //坦克长宽
     public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
-    private boolean moving = false; //坦克是否处于运动状态
+    private boolean moving = true; //地方坦克可以动了
     private boolean living = true;
     private Group group = Group.BAD;
     private TankFrame tf = null;
+
+    private Random random = new Random();
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf){
         super();
@@ -94,6 +97,7 @@ public class Tank {
                 x += SPEED;
                 break;
         }
+        if(random.nextInt(10) > 8) this.fire();
     }
 
     public void fire() {
