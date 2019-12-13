@@ -13,7 +13,17 @@ public class Tank {
 
     private boolean moving = false; //坦克是否处于运动状态
 
+    private boolean living = true;
+
     private TankFrame tf = null;
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 
     public boolean isMoving() {
         return moving;
@@ -41,7 +51,10 @@ public class Tank {
 
 
     public void paint(Graphics g){
-
+        if(!living){
+            tf.tanks.remove(this);
+            return;
+        }
         switch (dir) {
             case LEFT:
                 g.drawImage(ResourceMgr.tankL, x, y, null);
@@ -85,5 +98,9 @@ public class Tank {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2; //计算子弹生成的位置
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;//还是偏了一些，上下不明显，左右明显
         tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
+    }
+
+    public void die() {
+        this.living = false;
     }
 }
