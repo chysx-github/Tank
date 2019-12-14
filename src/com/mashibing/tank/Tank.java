@@ -115,7 +115,7 @@ public class Tank {
     private void randomDir() {
         this.dir = Dir.values()[random.nextInt(4)];
     }
-
+//
     public void fire() {
     //主坦克为什么在移动时会随机开火？
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2; //计算子弹生成的位置
