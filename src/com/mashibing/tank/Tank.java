@@ -1,6 +1,7 @@
 package com.mashibing.tank;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class Tank {
@@ -16,6 +17,8 @@ public class Tank {
     private Group group = Group.BAD;
     private TankFrame tf = null;
 
+    Rectangle rect = new Rectangle();//用来碰撞检测
+
     private Random random = new Random();
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf){
@@ -25,6 +28,11 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     } //构造方法
 
     public int getX() {
@@ -103,6 +111,11 @@ public class Tank {
         if(this.group == Group.BAD && random.nextInt(100) > 95) randomDir();
 
         boundsCheck();
+
+        //update rect
+        rect.x = this.x;
+        rect.y = this.y;
+
     }
 
     private void boundsCheck() {
@@ -115,7 +128,7 @@ public class Tank {
     private void randomDir() {
         this.dir = Dir.values()[random.nextInt(4)];
     }
-//
+
     public void fire() {
     //主坦克为什么在移动时会随机开火？
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2; //计算子弹生成的位置
