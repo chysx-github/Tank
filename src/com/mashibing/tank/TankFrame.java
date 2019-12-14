@@ -17,7 +17,7 @@ public class TankFrame extends Frame {
     List<Tank> tanks = new ArrayList<>();
     Explode e = new Explode(100, 100, this);
 
-    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
 
     //构造方法
     public TankFrame(){
@@ -108,6 +108,9 @@ public class TankFrame extends Frame {
             }
 
             setMainTankDir();
+
+            //new Thread(()->new Audio("audio/tank_move.wav").play()).start();
+            //移动声音有点吵
         }
 
         @Override

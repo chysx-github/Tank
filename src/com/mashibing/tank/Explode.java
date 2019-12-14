@@ -17,6 +17,8 @@ public class Explode {
         this.x = x;
         this.y = y;
         this.tf = tf;
+
+        new Thread(()->new Audio("audio/explode.wav").play()).start();
     }//构造方法
     public void paint(Graphics g) {
 

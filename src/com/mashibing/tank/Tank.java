@@ -97,14 +97,16 @@ public class Tank {
                 x += SPEED;
                 break;
         }
-        if(random.nextInt(10) > 8) this.fire();
+        if((random.nextInt(10) > 8) && (this.group == Group.BAD)) this.fire();
     }
 
     public void fire() {
-
+    //主坦克为什么在移动时会随机开火？
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2; //计算子弹生成的位置
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;//还是偏了一些，上下不明显，左右明显
         tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+
+        if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
 
     public void die() {
